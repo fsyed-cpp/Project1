@@ -1,4 +1,83 @@
-public class LinkedBag {
+/**
+ * The Linked List representation of our bag that implements the Bag interface
+ * @param <T>
+ */
 
-    // TODO...
+public class LinkedBag<T> implements BagInterface<T> {
+
+    // MARK: - Properties
+
+    Node<T> head;
+
+    // MARL: - Constructor
+
+    public LinkedBag(Node<T> head) {
+        this.head = head;
+    }
+
+    // MARK: - Bag Interface methods
+
+    /**
+     * TODO -> Implement the logic for all the Linked Bag methods
+     */
+
+    @Override
+    public int getCurrentSize() {
+        return 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean add(T newEntry) {
+        return false;
+    }
+
+    @Override
+    public T remove() {
+        return null;
+    }
+
+    @Override
+    public boolean remove(T anEntry) {
+        return false;
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public int getFrequencyOf(T anEntry) {
+        return 0;
+    }
+
+    @Override
+    public boolean contains(T anEntry) {
+        return false;
+    }
+
+    @Override
+    public T[] toArray() {
+        return null;
+    }
+
+    @Override
+    public BagInterface<T> union(BagInterface<T> bag) {
+        return null;
+    }
+
+    @Override
+    public BagInterface<T> intersection(BagInterface<T> bag) {
+        return null;
+    }
+
+    @Override
+    public BagInterface<T> difference(BagInterface<T> bag) {
+        return null;
+    }
 }
