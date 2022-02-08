@@ -25,9 +25,10 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
     }
 
     @Override
-    public boolean add(T newEntry) {
+    public boolean add(T newEntry)
+    {
         this.objects.add(newEntry);
-        return true;
+      return true;
     }
 
     /**
@@ -35,7 +36,8 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
      */
 
     @Override
-    public T remove() {
+    public T remove()
+    {
         return null;
     }
 
@@ -65,7 +67,9 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
     }
 
     @Override
-    public BagInterface<T> union(BagInterface<T> bag) {
+    public BagInterface<T> union(BagInterface<T> bag)
+    {
+
         return null;
     }
 
@@ -80,4 +84,12 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
     }
 
     // TODO...
+    // CODE FOR THROW EXCEPTIONS IN DIFFERENT CASES:
+
+    private void checkIfInitialized()
+    {
+
+    }
+
+
 }
