@@ -147,16 +147,86 @@ class LinkedBagTest<T> {
 
     // TODO: Create test cases...
 
+    /**
+     * A Union is defined as the joint items from both collections.
+     * We have intLinkedBag with items [3, 4]
+     * We have intLinkedBag2 with items [5,6]
+     * The union of both bags (intLinkedBag U intLinkedBag2) -> [3, 4, 5, 6]
+     */
     @Test
-    void union() {
+    void testUnion() {
+
+        // Arrange
+        Node<Integer> secondNode = new Node(3, null);
+        Node<Integer> headNode = new Node(4, secondNode);
+        LinkedBag<Integer> intLinkedBag = new LinkedBag<Integer>(headNode);
+
+        Node<Integer> aRandomNode = new Node(6, null);
+        Node<Integer> anotherHeadNode = new Node(5, aRandomNode);
+        LinkedBag<Integer> intLinkedBag2 = new LinkedBag<Integer>(anotherHeadNode);
+
+        // Act
+        BagInterface<Integer> everything = intLinkedBag.union(intLinkedBag2);
+
+        // Assert
+        assertTrue(everything.contains(3));
+        assertTrue(everything.contains(4));
+        assertTrue(everything.contains(5));
+        assertTrue(everything.contains(6));
     }
 
+    /**
+     * An Intersection is defined as the collection of items that occur in both collections
+     * We have intLinkedBag with items [3, 4]
+     * We have intLinkedBag2 with items [5, 3]
+     * The Intersection of both Bags should be [3] since '3' occurs in both bags
+     */
     @Test
-    void intersection() {
+    void testIntersection() {
+
+        // Arrange
+        Node<Integer> secondNode = new Node(3, null);
+        Node<Integer> headNode = new Node(4, secondNode);
+        LinkedBag<Integer> intLinkedBag = new LinkedBag<Integer>(headNode);
+
+        Node<Integer> aRandomNode = new Node(3, null);
+        Node<Integer> anotherHeadNode = new Node(5, aRandomNode);
+        LinkedBag<Integer> intLinkedBag2 = new LinkedBag<Integer>(anotherHeadNode);
+
+        // Act
+        BagInterface<Integer> everything = intLinkedBag.union(intLinkedBag2);
+
+        // Assert
+        assertTrue(everything.contains(3));
+        assertFalse(everything.contains(4));
+        assertFalse(everything.contains(5));
     }
 
+    /**
+     * A Difference is defined as the leftover items in a collection after removing the items that occur in the second collection.
+     * We have intLinkedBag with [4, 3, 5]
+     * We have intLinkedBag2 with [5, 3]
+     * The leftover ([4, 3, 5] - [5, 3]) should be [4] since 3 and 5 occur in both collections.
+     */
     @Test
-    void difference() {
-    }
+    void testDifference() {
 
+        // Arrange
+        Node<Integer> thirdNode = new Node(5, null);
+        Node<Integer> secondNode = new Node(3, thirdNode);
+        Node<Integer> headNode = new Node(4, secondNode);
+        LinkedBag<Integer> intLinkedBag = new LinkedBag<Integer>(headNode);
+
+        Node<Integer> aRandomNode = new Node(3, null);
+        Node<Integer> anotherHeadNode = new Node(5, aRandomNode);
+        LinkedBag<Integer> intLinkedBag2 = new LinkedBag<Integer>(anotherHeadNode);
+
+        // Act
+        BagInterface<Integer> leftover = intLinkedBag.difference(intLinkedBag2);
+
+        // Assert
+        assertTrue(leftover.contains(4));
+        assertFalse(leftover.contains(3));
+        assertFalse(leftover.contains(5));
+    }
 }
