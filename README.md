@@ -4,7 +4,7 @@ Names:
 
 Faisal Syed
 
-Musha Waghu
+Musa Waghu
 
 Olive Riggs
 
