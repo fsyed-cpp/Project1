@@ -7,51 +7,17 @@ public class LinkedBag<T> implements BagInterface<T>
 {
 
     // MARK: - Properties
-    private Node firstNode;
+    private Node<T> firstNode;
     private int numberOfEntries;
-    Node head;
+    Node<T> head;
 
     // MARL: - Constructor
 
-    public LinkedBag(Node head)
+    public LinkedBag(Node<T> head)
     {
         firstNode = null;
         numberOfEntries = 0;
         this.head = head;
-    }
-
-    private class Node
-    {
-        private T data;
-        private Node next;
-
-        // MARK: - Constructor
-
-        private Node(T dataPortion)
-        {
-            this(dataPortion, null);
-        }
-        private Node(T dataPortion, Node nextNode)
-        {
-            data = dataPortion;
-            next = nextNode;
-        }
-        private T getData()
-        {
-            return data;
-        }
-        private void setData(T newData)
-        {
-            data = newData;
-        }
-        private Node getNextNode()
-        {
-            return next;
-        }
-        private void netNextNode(Node nextNode)
-        {
-            next = nextNode;
-        }
     }
 
     // MARK: - Bag Interface methods

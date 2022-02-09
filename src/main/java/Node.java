@@ -8,32 +8,32 @@ public class Node<T>
     // MARK: - Properties
 
     private T data;
-    private Node next;
+    private Node<T> next;
 
     // MARK: - Constructor
 
-    private Node(T dataPortion)
+    Node(T dataPortion)
     {
         this(dataPortion, null);
     }
-    private Node(T dataPortion, Node nextNode)
+    Node(T dataPortion, Node<T> nextNode)
     {
         data = dataPortion;
         next = nextNode;
     }
-    private T getData()
+    T getData()
     {
         return data;
     }
-    private void setData(T newData)
+    void setData(T newData)
     {
         data = newData;
     }
-    private Node getNextNode()
+    Node<T> getNextNode()
     {
         return next;
     }
-    private void netNextNode(Node nextNode)
+    void setNextNode(Node<T> nextNode)
     {
         next = nextNode;
     }
