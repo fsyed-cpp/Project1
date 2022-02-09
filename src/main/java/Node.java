@@ -2,17 +2,40 @@
  * Stores the raw value that will be stored and tracked in our Bag implementations
  * @param <T> Represents the generic data type that will hold the value of our Node
  */
-public class Node<T> {
+public class Node<T>
+{
 
     // MARK: - Properties
 
-    T value;
-    Node<T> next;
+    private T data;
+    private Node next;
 
     // MARK: - Constructor
 
-    public Node(T value, Node<T> next) {
-        this.value = value;
-        this.next = next;
+    private Node(T dataPortion)
+    {
+        this(dataPortion, null);
     }
+    private Node(T dataPortion, Node nextNode)
+    {
+        data = dataPortion;
+        next = nextNode;
+    }
+    private T getData()
+    {
+        return data;
+    }
+    private void setData(T newData)
+    {
+        data = newData;
+    }
+    private Node getNextNode()
+    {
+        return next;
+    }
+    private void netNextNode(Node nextNode)
+    {
+        next = nextNode;
+    }
+
 }
