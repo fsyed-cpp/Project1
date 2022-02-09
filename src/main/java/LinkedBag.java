@@ -26,11 +26,6 @@ public class LinkedBag<T> implements BagInterface<T>
      * TODO -> Implement the logic for all the Linked Bag methods
      */
 
-    public void union()
-    {
-
-    }
-
     @Override
     public int getCurrentSize() {
         return 0;
@@ -57,9 +52,7 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public void clear() {
-
-    }
+    public void clear() {}
 
     @Override
     public int getFrequencyOf(T anEntry) {
