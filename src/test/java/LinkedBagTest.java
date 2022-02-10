@@ -133,12 +133,12 @@ class LinkedBagTest<T> {
     void testToArray() {
 
         // Arrange
-        Node<Integer> secondNode = new Node(3, null);
-        Node<Integer> headNode = new Node(4, secondNode);
-        LinkedBag<Integer> intLinkedBag = new LinkedBag<Integer>(headNode);
+        Node<Object> secondNode = new Node(3, null);
+        Node<Object> headNode = new Node(4, secondNode);
+        LinkedBag<Object> intLinkedBag = new LinkedBag<Object>(headNode);
 
         // Act
-        Integer[] arrayBag = intLinkedBag.toArray();
+        Object[] arrayBag = intLinkedBag.toArray();
 
         // Assert
         assertEquals(arrayBag[0], 4);
