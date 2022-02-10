@@ -28,50 +28,127 @@ public class LinkedBag<T> implements BagInterface<T>
 
     @Override
     public int getCurrentSize() {
-        return 0;
+        return numberOfEntries;
     }
 
     @Override
+    /** Sees whether this bag is empty.
+     * @return True if this bag is empty, or false if not. */
     public boolean isEmpty() {
-        return false;
+        return numberOfEntries == 0;
     }
 
     @Override
+    /** Adds a new entry to this bag.
+     * @param newEntry the object to be added as a new entry
+     * @return True if the addition is successful, or false if not. */
     public boolean add(T newEntry) {
-        return false;
+        Node newNode = new Node(newEntry);
+        newNode.next = firstNode;
+        firstNode = newNode;
+        numberOfEntries++;
+        return true;
     }
 
     @Override
     public T remove() {
-        return null;
+        T result = null;
+        if (firstNode != null)
+        {
+            result = firstNode.getData();
+            firstNode = firstNode.getNextNode();
+            numberOfEntries--;
+        }
+        return result;
     }
 
+    private Node getReferenceTo(T anEntry) {
+        boolean found = false;
+        Node currentNode = firstNode;
+        while (!found && (currentNode != null))
+        {
+            if(anEntry.equals(currentNode.getData()))
+            {
+                found = true;
+            }
+            else
+            currentNode = currentNode.getNextNode();
+        }
+        return currentNode;
+    }
     @Override
     public boolean remove(T anEntry) {
-        return false;
+        boolean result = false;
+        Node nodeN = getReferenceTo(anEntry);
+        if (nodeN != null)
+        {
+            nodeN.setData((firstNode.getData()));
+            firstNode = firstNode.getNextNode();
+            numberOfEntries--;
+            result = true;
+        }
+        return result;
     }
 
     @Override
-    public void clear() {}
+    public void clear() {
+        while (!isEmpty())
+            remove();
+    }
 
     @Override
     public int getFrequencyOf(T anEntry) {
-        return 0;
+        int frequency = 0;
+        int counter = 0;
+        Node currentNode = firstNode;
+        while ((counter < numberOfEntries) && (currentNode != null))
+        {
+            if (anEntry.equals(currentNode.getData()))
+            {
+                frequency++;
+            }
+            counter++;
+            currentNode = currentNode.getNextNode();
+        }
+        return frequency;
     }
 
     @Override
     public boolean contains(T anEntry) {
-        return false;
+        boolean found = false;
+        Node currentNode = firstNode;
+        while (!found && (currentNode != null))
+        {
+            if (anEntry.equals(currentNode.getData()))
+            {
+                found = true;
+            }
+            else
+                currentNode = currentNode.getNextNode();
+        }
+        return found;
     }
 
     @Override
     public T[] toArray() {
-        return null;
+        @SuppressWarnings("unchecked")
+        T[] result = (T[]) new Object[numberOfEntries];
+        int index = 0;
+        Node currentNode = firstNode;
+        while ((index < numberOfEntries) && (currentNode != null))
+        {
+            result[index] = (T) currentNode.getData();
+            index++;
+            currentNode = currentNode.getNextNode();
+        }
+        return result;
     }
 
     @Override
     public BagInterface<T> union(BagInterface<T> bag) {
-        return null;
+        LinkedBag<T> bag1 = this;
+
+        return bag;
     }
 
     @Override
