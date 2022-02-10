@@ -58,6 +58,10 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
         return this.bagObject.length;
     }
 
+    /**
+     * Check if it empty
+     * @return boolean value
+     */
     @Override
     public boolean isEmpty() {
         return this.bagObject.length == 0;
