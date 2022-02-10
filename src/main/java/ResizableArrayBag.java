@@ -1,33 +1,82 @@
-import java.util.ArrayList;
+//import java.util.ArrayList;
+import java.lang.SuppressWarnings;
+import java.util.Arrays;
 
 public class ResizableArrayBag<T> implements BagInterface<T> {
 
     // MARK: - Properties
-
-    ArrayList<T> objects;
+    // needed variables
+    private T[] bagObject; // array to store the element in the bags
+    private int numOfEntries;
+    private static final int DEFAULT_CAPACITY = 100;
+    private static final int MAX_CAPACITY = 10000;
+    private boolean initialized = false;
 
     // MARK: Constructor
+    /**
+     * create an empty bag with default capacity
+     */
+    public ResizableArrayBag()
+    {
+        this(DEFAULT_CAPACITY);
+    }
 
-    public ResizableArrayBag(ArrayList<T> objects) {
-        this.objects = objects;
+    /**
+     * Creates an empty bag having a given initial capacity
+     * @param capacity the integer capacity desired
+     */
+    public ResizableArrayBag(int capacity)
+    {
+        // needed method to check capacity
+
+        // @SuppressWarnings("unchecked") instructs the compiler to
+        // precede a method definition or a variable declaration
+        @SuppressWarnings("unchecked")
+        T[] tempBag = (T[]) new Object[capacity];
+        this.bagObject = tempBag;
+        numOfEntries = 0;
+        initialized = true;
+    }
+
+    /** create a bag containing given entries of some bag
+     * @param someBag An array of object
+     */
+    public ResizableArrayBag(T[] someBag)
+    {
+        // needed method to check capacity
+
+        bagObject = Arrays.copyOf(someBag, someBag.length);
+        numOfEntries = someBag.length;
+        initialized = true;
     }
 
     // MARK: - Bag Interface Methods
 
     @Override
-    public int getCurrentSize() {
-        return this.objects.size();
+    public int getCurrentSize()
+    {
+        return this.bagObject.length;
     }
 
     @Override
     public boolean isEmpty() {
-        return this.objects.size() == 0;
+        return this.bagObject.length == 0;
+    }
+
+    /**
+     * check is the bag is full
+     * @return true if the array bag is full, or false if not
+     */
+    public boolean isFull()
+    {
+        return numOfEntries >= bagObject.length;
     }
 
     @Override
     public boolean add(T newEntry)
     {
-        this.objects.add(newEntry);
+        bagObject[numOfEntries] = newEntry;
+        numOfEntries++;
       return true;
     }
 
@@ -42,7 +91,8 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
     }
 
     @Override
-    public boolean remove(T anEntry) {
+    public boolean remove(T anEntry)
+    {
         return false;
     }
 
@@ -57,7 +107,8 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
     }
 
     @Override
-    public boolean contains(T anEntry) {
+    public boolean contains(T anEntry)
+    {
         return false;
     }
 
