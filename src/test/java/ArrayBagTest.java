@@ -40,7 +40,7 @@ class ArrayBagTest {
     void testIsEmpty() {
 
         // Arrange
-        ResizableArrayBag emptyArrayBag = new ResizableArrayBag();
+        ResizableArrayBag emptyArrayBag = new ResizableArrayBag(0);
         ResizableArrayBag nonEmptyArrayBag = new ResizableArrayBag(10);
         nonEmptyArrayBag.add(3);
 
