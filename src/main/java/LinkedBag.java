@@ -146,7 +146,9 @@ public class LinkedBag<T> implements BagInterface<T>
 
     @Override
     public BagInterface<T> union(BagInterface<T> bag) {
-        return null;
+        LinkedBag<T> bag1 = this;
+
+        return bag;
     }
 
     @Override
