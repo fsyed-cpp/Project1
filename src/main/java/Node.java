@@ -7,8 +7,8 @@ public class Node<T>
 
     // MARK: - Properties
 
-    private T data;
-    private Node<T> next;
+    public T data;
+    public Node<T> next;
 
     // MARK: - Constructor
 
