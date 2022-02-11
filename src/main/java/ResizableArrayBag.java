@@ -1,18 +1,20 @@
 import java.lang.SuppressWarnings;
 import java.util.Arrays;
 
-public class ResizableArrayBag<T> implements BagInterface<T> {
+public class ResizableArrayBag<T> implements BagInterface<T>
+{
 
     // MARK: - Properties
-    // needed variables
     private T[] bagObject; // array to store the element in the bags
     private int numOfEntries;
     private static final int DEFAULT_CAPACITY = 100;
-    private static final int MAX_CAPACITY = 10000;
-    private boolean initialized = false;
 
-    // MARK: Constructor
+    // additional variables to make the implementation secure
+    private boolean initialized;
+    private static final int MAX_CAPACITY = 10000;
+
     /**
+     * Default constructor:
      * create an empty bag with default capacity
      */
     public ResizableArrayBag()
@@ -26,15 +28,19 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
      */
     public ResizableArrayBag(int capacity)
     {
-        // needed method to check capacity
-
-        // @SuppressWarnings("unchecked") instructs the compiler to
-        // precede a method definition or a variable declaration
-        @SuppressWarnings("unchecked")
-        T[] tempBag = (T[]) new Object[capacity];
-        this.bagObject = tempBag;
-        numOfEntries = 0;
-        initialized = true;
+        if (capacity <= MAX_CAPACITY)
+        {
+            //instructs the compiler to
+            // precede a method definition or a variable declaration
+            @SuppressWarnings("unchecked")
+            T[] tempBag = (T[]) new Object[capacity]; //unchecked cast
+            this.bagObject = tempBag;
+            numOfEntries = 0;
+        }
+        else
+        {
+            checkCapacity(capacity);
+        }
     }
 
     /** create a bag containing given entries of some bag
@@ -42,19 +48,22 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
      */
     public ResizableArrayBag(T[] someBag)
     {
-        // needed method to check capacity
+        checkCapacity(someBag.length);
 
         bagObject = Arrays.copyOf(someBag, someBag.length);
         numOfEntries = someBag.length;
-        initialized = true;
     }
 
     // MARK: - Bag Interface Methods
 
+    /**
+     * get the number of size of the array bag
+     * @return number of entries
+     */
     @Override
     public int getCurrentSize()
     {
-        return this.bagObject.length;
+        return numOfEntries;
     }
 
     /**
@@ -72,51 +81,101 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
      */
     public boolean isFull()
     {
-        return numOfEntries >= bagObject.length;
+        return numOfEntries == bagObject.length;
     }
 
+    /**
+     * This method checks whether the bag is full
+     * return boolean value.
+     * If the bag is full, the program simply add new entry in the array bag
+     */
     @Override
     public boolean add(T newEntry)
     {
+        checkIntegrity();
+
+        boolean result = true;
         if (isFull())
         {
-           // doubleCapacity();  // still need to be implemented
+           doubleCapacity();
         }
+
         bagObject[numOfEntries] = newEntry;
         numOfEntries++;
+
       return true;
     }
 
     /**
-     * TODO -> Implement the logic for the following Resizable Array Bag methods
+     * Removes one unspecified entry from the bag, if possible.
+     * @return either the removed entry, if the removal was successful, or null otherwise.
      */
-
     @Override
     public T remove()
     {
-        return null;
+        checkIntegrity();
+        T result = removeEntry(numOfEntries-1);
+        return result;
     }
 
+    /**
+     * Removes one occurrence of a given entry from the bag .
+     * @param anEntry  The entry to be removed.
+     * @return true if the removal was successful, or false if not.
+     */
     @Override
     public boolean remove(T anEntry)
     {
+        checkIntegrity();
+        int index = getIndexOf(anEntry);
+        T result = removeEntry(index);
         return false;
     }
 
+    /**
+     * Removes all entries from this bag.
+     */
     @Override
-    public void clear() {
+    public void clear()
+    {
+        while(isEmpty())
+        {
+            remove();
+        }
 
     }
 
+    /**
+     * count the number of times of an entry appears in the bag
+     * @param anEntry  The entry to be counted.
+     * @return number of frequency of entry in the bag
+     */
     @Override
-    public int getFrequencyOf(T anEntry) {
-        return 0;
+    public int getFrequencyOf(T anEntry)
+    {
+        checkIntegrity();
+
+        int counter = 0;
+        for (int index = 0; index < numOfEntries; index++)
+        {
+            if (anEntry.equals(bagObject[index]))
+            {
+                counter++;
+            }
+        }
+        return counter;
     }
 
+    /**
+     * Test whether this bag contains given entry.
+     * @param anEntry . The entry to locate
+     * @return True if this bag contains anEntry, or false otherwise.
+     */
     @Override
     public boolean contains(T anEntry)
     {
-        return false;
+        checkIntegrity();
+        return getIndexOf(anEntry) > -1; // or >=0
     }
 
     /**
@@ -153,19 +212,86 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
     }
 
 
-    // Additional public methods:
-
-
-
-
-    // TODO...
-    // CODE FOR THROW EXCEPTIONS IN DIFFERENT CASES:
-
-    private void checkIfInitialized()
+    // Supplement methods:
+    /**
+     * Double the capacity of the array
+     * Precondition: checkIntegrity has been called
+     */
+    private void doubleCapacity()
     {
-
+        int newCapacity = 2* bagObject.length;
+        checkCapacity(newCapacity);
+        bagObject = Arrays.copyOf(bagObject, newCapacity);
     }
 
+
+    /**
+     * Locates a given entry within the array bag.
+     * return the index of the entry, if located, or -1 otherwise
+     * Precondition: checkIntegrity has been called
+     */
+    private int getIndexOf(T anEntry)
+    {
+        int indexLocation = -1;
+        boolean found = false;
+        int index = 0;
+
+        while ((!found && index < numOfEntries))
+        {
+            if (anEntry.equals(bagObject[index]))
+            {
+                found = true;
+                indexLocation = index;
+            }
+            index++;
+        }
+        return indexLocation;
+    }
+
+    /**
+     * Removes and return the entry at a given index within the array bag
+     * @param givenIndex
+     * @return boolean value, if no such entry exits, return null.
+     * preconditions: 0 <= givenIndex < numberOfEntries;
+     * checkIntegrity has been called.
+     */
+    private T removeEntry(int givenIndex)
+    {
+        T result = null;
+
+        if(!isEmpty() && (givenIndex >= 0))
+        {
+            result = bagObject[givenIndex]; //entry to remove
+            bagObject[givenIndex] = bagObject[numOfEntries - 1]; // replace entry with the last entry
+            bagObject[numOfEntries - 1] = null; //remove last entry
+            numOfEntries--;
+        }
+        return result;
+    }
+
+    /**
+     * Throws an exception if this object is not initialized
+     */
+    private void checkIntegrity()
+    {
+        if(!initialized)
+        {
+            throw new SecurityException("ArrayBag object is corrupt.");
+        }
+    }
+
+    /**
+     * method to check the capacity of array
+     * throw an exception if the capacity exceed MAX_CAPACITY
+     */
+    private void checkCapacity (int capacity)
+    {
+        if (capacity > MAX_CAPACITY)
+        {
+            throw new IllegalStateException
+                    ("Requested capacity exceeds maximum of " + MAX_CAPACITY + ".");
+        }
+    }
 
 
 
