@@ -1,4 +1,3 @@
-//import java.util.ArrayList;
 import java.lang.SuppressWarnings;
 import java.util.Arrays;
 
@@ -79,6 +78,10 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
     @Override
     public boolean add(T newEntry)
     {
+        if (isFull())
+        {
+           // doubleCapacity();  // still need to be implemented
+        }
         bagObject[numOfEntries] = newEntry;
         numOfEntries++;
       return true;
@@ -116,9 +119,20 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
         return false;
     }
 
+    /**
+     * retrieve the entries that are in a bag
+     * @return entries to the client within the newly allocated array.
+     */
     @Override
-    public T[] toArray() {
-        return null;
+    public T[] toArray()
+    {
+        @SuppressWarnings("unchecked")
+                T[] result = (T[]) new Object[numOfEntries]; // uncheck cast
+        for (int index = 0; index < numOfEntries; index++)
+        {
+            result[index] = bagObject[index];
+        }
+        return result;
     }
 
     @Override
@@ -137,6 +151,12 @@ public class ResizableArrayBag<T> implements BagInterface<T> {
     public BagInterface<T> difference(BagInterface<T> bag) {
         return null;
     }
+
+
+    // Additional public methods:
+
+
+
 
     // TODO...
     // CODE FOR THROW EXCEPTIONS IN DIFFERENT CASES:
