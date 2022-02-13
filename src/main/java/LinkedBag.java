@@ -1,5 +1,6 @@
 /**
  * The Linked List representation of our bag that implements the Bag interface
+ *
  * @param <T>
  */
 
@@ -27,14 +28,16 @@ public class LinkedBag<T> implements BagInterface<T>
      */
 
     @Override
-    public int getCurrentSize() {
+    public int getCurrentSize()
+    {
         return numberOfEntries;
     }
 
     @Override
     /** Sees whether this bag is empty.
      * @return True if this bag is empty, or false if not. */
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return numberOfEntries == 0;
     }
 
@@ -42,7 +45,8 @@ public class LinkedBag<T> implements BagInterface<T>
     /** Adds a new entry to this bag.
      * @param newEntry the object to be added as a new entry
      * @return True if the addition is successful, or false if not. */
-    public boolean add(T newEntry) {
+    public boolean add(T newEntry)
+    {
         Node newNode = new Node(newEntry);
         newNode.next = firstNode;
         firstNode = newNode;
@@ -51,7 +55,8 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public T remove() {
+    public T remove()
+    {
         T result = null;
         if (firstNode != null)
         {
@@ -62,22 +67,24 @@ public class LinkedBag<T> implements BagInterface<T>
         return result;
     }
 
-    private Node getReferenceTo(T anEntry) {
+    private Node getReferenceTo(T anEntry)
+    {
         boolean found = false;
         Node currentNode = firstNode;
         while (!found && (currentNode != null))
         {
-            if(anEntry.equals(currentNode.getData()))
+            if (anEntry.equals(currentNode.getData()))
             {
                 found = true;
-            }
-            else
-            currentNode = currentNode.getNextNode();
+            } else
+                currentNode = currentNode.getNextNode();
         }
         return currentNode;
     }
+
     @Override
-    public boolean remove(T anEntry) {
+    public boolean remove(T anEntry)
+    {
         boolean result = false;
         Node nodeN = getReferenceTo(anEntry);
         if (nodeN != null)
@@ -91,13 +98,15 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public void clear() {
+    public void clear()
+    {
         while (!isEmpty())
             remove();
     }
 
     @Override
-    public int getFrequencyOf(T anEntry) {
+    public int getFrequencyOf(T anEntry)
+    {
         int frequency = 0;
         int counter = 0;
         Node currentNode = firstNode;
@@ -114,7 +123,8 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public boolean contains(T anEntry) {
+    public boolean contains(T anEntry)
+    {
         boolean found = false;
         Node currentNode = firstNode;
         while (!found && (currentNode != null))
@@ -122,15 +132,15 @@ public class LinkedBag<T> implements BagInterface<T>
             if (anEntry.equals(currentNode.getData()))
             {
                 found = true;
-            }
-            else
+            } else
                 currentNode = currentNode.getNextNode();
         }
         return found;
     }
 
     @Override
-    public T[] toArray() {
+    public T[] toArray()
+    {
         @SuppressWarnings("unchecked")
         T[] result = (T[]) new Object[numberOfEntries];
         int index = 0;
@@ -145,19 +155,31 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public BagInterface<T> union(BagInterface<T> bag) {
-        LinkedBag<T> bag1 = this;
-
-        return bag;
+    public BagInterface<T> union(BagInterface<T> otherBag)
+    {
+        T[] firstBagContents = this.toArray();
+        T[] secondBagContents = otherBag.toArray();
+        BagInterface<T> unionBag = new LinkedBag<>(head);
+        for (int i = 0; i <= firstBagContents.length; i++)
+        {
+            unionBag.add(firstBagContents[i]);
+        }
+        for (int i = 0; i <= secondBagContents.length; i++)
+        {
+            unionBag.add(secondBagContents[i]);
+        }
+        return unionBag;
     }
 
     @Override
-    public BagInterface<T> intersection(BagInterface<T> bag) {
+    public BagInterface<T> intersection(BagInterface<T> bag)
+    {
         return null;
     }
 
     @Override
-    public BagInterface<T> difference(BagInterface<T> bag) {
+    public BagInterface<T> difference(BagInterface<T> bag)
+    {
         return null;
     }
 }
