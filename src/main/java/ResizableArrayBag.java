@@ -17,28 +17,26 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      * Default constructor:
      * create an empty bag with default capacity
      */
-    public ResizableArrayBag()
-    {
+    public ResizableArrayBag() {
         this(DEFAULT_CAPACITY);
+        initialized = true;
     }
 
     /**
      * Creates an empty bag having a given initial capacity
      * @param capacity the integer capacity desired
      */
-    public ResizableArrayBag(int capacity)
-    {
-        if (capacity <= MAX_CAPACITY)
-        {
+    public ResizableArrayBag(int capacity) {
+        if (capacity <= MAX_CAPACITY) {
             //instructs the compiler to
             // precede a method definition or a variable declaration
             @SuppressWarnings("unchecked")
             T[] tempBag = (T[]) new Object[capacity]; //unchecked cast
             this.bagObject = tempBag;
             numOfEntries = 0;
+            initialized = true;
         }
-        else
-        {
+        else {
             checkCapacity(capacity);
         }
     }
@@ -201,9 +199,30 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         return null;
     }
 
+    /**
+     * Time Complexity: O(n * m) because we are iterating inside a nested loop
+     * Space Complexity: O(n) because we are creating space for a new array from our bag
+     * @param bag The bag we want to find the intersection with
+     * @return a new bag containing the common items between both bags
+     */
     @Override
     public BagInterface<T> intersection(BagInterface<T> bag) {
-        return null;
+
+        // We must create a new bag to contain the intersection of both bags
+        BagInterface<T> newBag = new ResizableArrayBag<T>(this.getCurrentSize());
+
+        // Convert bag to array to get element at index
+        T[] bagArray = bag.toArray();
+
+        // Iterate through the given bag, and add the common items from the
+        // current bag + passed bag into our new bag
+        for (int i = 0; i < bag.getCurrentSize(); i++) {
+            if (this.contains(bagArray[i])) {
+                newBag.add(bagArray[i]);
+            }
+        }
+
+        return newBag;
     }
 
     @Override

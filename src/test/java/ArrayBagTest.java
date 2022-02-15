@@ -199,15 +199,15 @@ class ArrayBagTest {
     void testIntersection() {
 
         // Arrange
-        ResizableArrayBag<Integer> intArrayBag = new ResizableArrayBag<>(2);
+        ResizableArrayBag<Object> intArrayBag = new ResizableArrayBag<>(2);
         intArrayBag.add(3);
         intArrayBag.add(4);
-        ResizableArrayBag<Integer> intArrayBag2 = new ResizableArrayBag<>(2);
+        ResizableArrayBag<Object> intArrayBag2 = new ResizableArrayBag<>(2);
         intArrayBag2.add(5);
         intArrayBag2.add(3);
 
         // Act
-        BagInterface<Integer> intersection = intArrayBag.intersection(intArrayBag2);
+        BagInterface<Object> intersection = intArrayBag.intersection(intArrayBag2);
 
         // Assert
         assertTrue(intersection.contains(3));
