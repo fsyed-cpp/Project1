@@ -34,7 +34,7 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    /** Sees whether this bag is empty.
+    /* Sees whether this bag is empty.
      * @return True if this bag is empty, or false if not. */
     public boolean isEmpty()
     {
@@ -42,12 +42,12 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    /** Adds a new entry to this bag.
+    /* Adds a new entry to this bag.
      * @param newEntry the object to be added as a new entry
      * @return True if the addition is successful, or false if not. */
     public boolean add(T newEntry)
     {
-        Node newNode = new Node(newEntry);
+        Node<T> newNode = new Node<>(newEntry);
         newNode.next = firstNode;
         firstNode = newNode;
         numberOfEntries++;
@@ -67,10 +67,10 @@ public class LinkedBag<T> implements BagInterface<T>
         return result;
     }
 
-    private Node getReferenceTo(T anEntry)
+    private Node<T> getReferenceTo(T anEntry)
     {
         boolean found = false;
-        Node currentNode = firstNode;
+        Node<T> currentNode = firstNode;
         while (!found && (currentNode != null))
         {
             if (anEntry.equals(currentNode.getData()))
@@ -86,7 +86,7 @@ public class LinkedBag<T> implements BagInterface<T>
     public boolean remove(T anEntry)
     {
         boolean result = false;
-        Node nodeN = getReferenceTo(anEntry);
+        Node<T> nodeN = getReferenceTo(anEntry);
         if (nodeN != null)
         {
             nodeN.setData((firstNode.getData()));
@@ -109,7 +109,7 @@ public class LinkedBag<T> implements BagInterface<T>
     {
         int frequency = 0;
         int counter = 0;
-        Node currentNode = firstNode;
+        Node<T> currentNode = firstNode;
         while ((counter < numberOfEntries) && (currentNode != null))
         {
             if (anEntry.equals(currentNode.getData()))
@@ -126,7 +126,7 @@ public class LinkedBag<T> implements BagInterface<T>
     public boolean contains(T anEntry)
     {
         boolean found = false;
-        Node currentNode = firstNode;
+        Node<T> currentNode = firstNode;
         while (!found && (currentNode != null))
         {
             if (anEntry.equals(currentNode.getData()))
@@ -144,10 +144,10 @@ public class LinkedBag<T> implements BagInterface<T>
         @SuppressWarnings("unchecked")
         T[] result = (T[]) new Object[numberOfEntries];
         int index = 0;
-        Node currentNode = firstNode;
+        Node<T> currentNode = firstNode;
         while ((index < numberOfEntries) && (currentNode != null))
         {
-            result[index] = (T) currentNode.getData();
+            result[index] = currentNode.getData();
             index++;
             currentNode = currentNode.getNextNode();
         }
