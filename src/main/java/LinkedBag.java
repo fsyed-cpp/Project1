@@ -10,15 +10,13 @@ public class LinkedBag<T> implements BagInterface<T>
     // MARK: - Properties
     private Node<T> firstNode;
     private int numberOfEntries;
-    Node<T> head;
 
     // MARL: - Constructor
 
-    public LinkedBag(Node<T> head)
+    public LinkedBag(Node<T> firstNode)
     {
-        firstNode = null;
         numberOfEntries = 0;
-        this.head = head;
+        this.firstNode = firstNode;
     }
 
     // MARK: - Bag Interface methods
@@ -155,26 +153,45 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public BagInterface<T> union(BagInterface<T> otherBag)
-    {
+    public BagInterface<T> union(BagInterface<T> otherBag) {
         T[] firstBagContents = this.toArray();
         T[] secondBagContents = otherBag.toArray();
-        BagInterface<T> unionBag = new LinkedBag<>(head);
-        for (int i = 0; i <= firstBagContents.length; i++)
-        {
+        BagInterface<T> unionBag = new LinkedBag<>(firstNode);
+        for (int i = 0; i < firstBagContents.length; i++) {
             unionBag.add(firstBagContents[i]);
         }
-        for (int i = 0; i <= secondBagContents.length; i++)
-        {
+        for (int i = 0; i < secondBagContents.length; i++) {
             unionBag.add(secondBagContents[i]);
         }
         return unionBag;
     }
 
+    /**
+     * Time Complexity: O(n^2) because we are iterating through our second bag inside our first bag traversal
+     * Space Complexity O(1) because we are creating a new bag with the collection of both items
+     * @param bag The bag which we would like to find the common items with
+     * @return a new bag object containing the common items from both bags
+     */
     @Override
-    public BagInterface<T> intersection(BagInterface<T> bag)
-    {
-        return null;
+    public BagInterface<T> intersection(BagInterface<T> bag) {
+
+        // Create a new bag to return with the common items
+        BagInterface<T> newBag = new LinkedBag<T>(null);
+
+        // Get the starting position for our current bag and use a counter to keep track + safeguard
+        Node<T> current = this.firstNode;
+        int counter = 0;
+
+        // Traverse through our bag and for each value, check if the passed in bag contains this item
+        while (current != null && counter < this.getCurrentSize()) {
+            if (bag.contains(current.data)) {
+                newBag.add(current.data);
+            }
+            current = current.next;
+            counter++;
+        }
+
+        return newBag;
     }
 
     @Override
