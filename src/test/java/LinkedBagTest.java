@@ -155,16 +155,20 @@ class LinkedBagTest<T> {
     void testUnion() {
 
         // Arrange
-        Node<Object> headNode = new Node(4, null);
-        LinkedBag<Object> intLinkedBag = new LinkedBag<Object>(headNode);
+        Node<Integer> secondNode = new Node(4,null);
+        Node<Integer> headNode = new Node(3, secondNode);
+        LinkedBag<Integer> intLinkedBag = new LinkedBag<Integer>(headNode);
         intLinkedBag.add(3);
+        intLinkedBag.add(4);
 
-        Node<Object> anotherHeadNode = new Node(5, null);
-        LinkedBag<Object> intLinkedBag2 = new LinkedBag<Object>(anotherHeadNode);
+        Node<Integer> anotherSecondNode = new Node(6,null);
+        Node<Integer> anotherHeadNode = new Node(5, anotherSecondNode);
+        LinkedBag<Integer> intLinkedBag2 = new LinkedBag<Integer>(anotherHeadNode);
+        intLinkedBag2.add(5);
         intLinkedBag2.add(6);
 
         // Act
-        BagInterface<Object> everything = intLinkedBag.union(intLinkedBag2);
+        BagInterface<Integer> everything = intLinkedBag.union(intLinkedBag2);
 
         // Assert
         assertFalse(everything.contains(3));
