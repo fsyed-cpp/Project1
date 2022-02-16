@@ -192,11 +192,29 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         return result;
     }
 
+    /**
+     * This method does not alter either bag. The current bag and the second bag in the parameter
+     * should be the same when the method ends.
+     * @param secondBag
+     * @return unionBag containing elements from 2 bags
+     */
     @Override
-    public BagInterface<T> union(BagInterface<T> bag)
+    public BagInterface<T> union(BagInterface<T> secondBag)
     {
+        BagInterface <T> unionBag = new ResizableArrayBag<>();
+        ResizableArrayBag <T> otherBag = (ResizableArrayBag<T>) secondBag;
 
-        return null;
+        int index;
+
+        // add entries from this current object (bagObject) to the other bag
+        for (index = 0; index < numOfEntries; index++)
+            unionBag.add(bagObject[index]);
+
+        // add entries from the second bag to the new bag
+        for (index = 0; index < otherBag.getCurrentSize(); index++)
+            unionBag.add(otherBag.bagObject[index]);
+
+        return unionBag;
     }
 
     /**
@@ -206,7 +224,8 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      * @return a new bag containing the common items between both bags
      */
     @Override
-    public BagInterface<T> intersection(BagInterface<T> bag) {
+    public BagInterface<T> intersection(BagInterface<T> bag)
+    {
 
         // We must create a new bag to contain the intersection of both bags
         BagInterface<T> newBag = new ResizableArrayBag<T>(this.getCurrentSize());
@@ -226,7 +245,8 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     }
 
     @Override
-    public BagInterface<T> difference(BagInterface<T> bag) {
+    public BagInterface<T> difference(BagInterface<T> bag)
+    {
         return null;
     }
 
@@ -311,7 +331,4 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                     ("Requested capacity exceeds maximum of " + MAX_CAPACITY + ".");
         }
     }
-
-
-
 }
