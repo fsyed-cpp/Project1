@@ -153,8 +153,9 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public BagInterface<T> union(BagInterface<T> otherBag) {
-        T[] firstBagContents = this.toArray();
+    public BagInterface<T> union(BagInterface<T> otherBag)
+    {
+        /*T[] firstBagContents = this.toArray();
         T[] secondBagContents = otherBag.toArray();
         BagInterface<T> unionBag = new LinkedBag<>(firstNode);
         for (int i = 0; i < firstBagContents.length; i++) {
@@ -163,7 +164,18 @@ public class LinkedBag<T> implements BagInterface<T>
         for (int i = 0; i < secondBagContents.length; i++) {
             unionBag.add(secondBagContents[i]);
         }
-        return unionBag;
+        return unionBag;*/
+        BagInterface<T> bag1 = new LinkedBag<T>(null);
+        T[] bag2 = otherBag.toArray();
+        for (T elem : bag2)
+        {
+            bag1.add(elem);
+        }
+        T[] first = this.toArray();
+        for (T elem: first){
+            bag1.add(elem);
+        }
+        return bag1;
     }
 
     /**
