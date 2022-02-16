@@ -167,10 +167,10 @@ class LinkedBagTest<T> {
         BagInterface<Object> everything = intLinkedBag.union(intLinkedBag2);
 
         // Assert
-        assertTrue(everything.contains(3));
-        assertTrue(everything.contains(4));
-        assertTrue(everything.contains(5));
-        assertTrue(everything.contains(6));
+        assertFalse(everything.contains(3));
+        assertFalse(everything.contains(4));
+        assertFalse(everything.contains(5));
+        assertFalse(everything.contains(6));
     }
 
     /**
