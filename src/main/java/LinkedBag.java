@@ -183,16 +183,15 @@ public class LinkedBag<T> implements BagInterface<T>
     {
         BagInterface<T> unionBag = new LinkedBag<T>(null);
 
-        Node<T> currentNode = firstNode;
+        Node<T> currentNode = this.firstNode;
         int counter = 0;
 
         while (counter < this.getCurrentSize() && currentNode != null)
         {
             unionBag.add(currentNode.data);
-        }
-
             currentNode = currentNode.next;
             counter++;
+        }
         return unionBag;
     }
 
