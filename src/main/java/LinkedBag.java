@@ -15,7 +15,11 @@ public class LinkedBag<T> implements BagInterface<T>
 
     public LinkedBag(Node<T> firstNode)
     {
-        numberOfEntries = 0;
+        if (firstNode != null) {
+            numberOfEntries = 1;
+        } else {
+            numberOfEntries = 0;
+        }
         this.firstNode = firstNode;
     }
 
@@ -153,8 +157,9 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public BagInterface<T> union(BagInterface<T> otherBag) {
-        T[] firstBagContents = this.toArray();
+    public BagInterface<T> union(BagInterface<T> otherBag)
+    {
+        /*T[] firstBagContents = this.toArray();
         T[] secondBagContents = otherBag.toArray();
         BagInterface<T> unionBag = new LinkedBag<>(firstNode);
         for (int i = 0; i < firstBagContents.length; i++) {
@@ -163,7 +168,18 @@ public class LinkedBag<T> implements BagInterface<T>
         for (int i = 0; i < secondBagContents.length; i++) {
             unionBag.add(secondBagContents[i]);
         }
-        return unionBag;
+        return unionBag;*/
+        BagInterface<T> bag1 = new LinkedBag<T>(null);
+        T[] bag2 = otherBag.toArray();
+        for (T elem : bag2)
+        {
+            bag1.add(elem);
+        }
+        T[] first = this.toArray();
+        for (T elem: first){
+            bag1.add(elem);
+        }
+        return bag1;
     }
 
     /**
@@ -195,8 +211,25 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public BagInterface<T> difference(BagInterface<T> bag)
-    {
-        return null;
+    public BagInterface<T> difference(BagInterface<T> bag) {
+
+        // Create a new bag to return with the common items
+        BagInterface<T> newBag = this;
+
+        // Get the starting position for our current bag and use a counter to keep track + safeguard
+        Node<T> current = this.firstNode;
+        int counter = 0;
+
+        // Traverse through our bag and for each value, check if the passed in bag contains this item
+        // Remove the common values
+        while (current != null && counter < this.getCurrentSize()) {
+            if (bag.contains(current.data)) {
+                newBag.remove(current.data);
+            }
+            current = current.next;
+            counter++;
+        }
+
+        return newBag;
     }
 }
