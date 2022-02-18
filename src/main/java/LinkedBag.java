@@ -11,10 +11,9 @@ public class LinkedBag<T> implements BagInterface<T>
     private Node<T> firstNode;
     private int numberOfEntries;
 
-    // MARL: - Constructor
+    // MARK: - Constructor
 
-    public LinkedBag(Node<T> firstNode)
-    {
+    public LinkedBag(Node<T> firstNode) {
         if (firstNode != null) {
             numberOfEntries = 1;
         } else {
@@ -33,16 +32,14 @@ public class LinkedBag<T> implements BagInterface<T>
     /** Gets the number of entries currently in this bag.
      * @return The integer number of entries currently in this bag.
      */
-    public int getCurrentSize()
-    {
+    public int getCurrentSize() {
         return numberOfEntries;
     }
 
     @Override
     /** Sees whether this bag is empty.
      * @return True if this bag is empty, or false if not. **/
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return numberOfEntries == 0;
     }
 
@@ -50,8 +47,7 @@ public class LinkedBag<T> implements BagInterface<T>
     /** Adds a new entry to this bag.
      * @param newEntry the object to be added as a new entry
      * @return True if the addition is successful, or false if not. */
-    public boolean add(T newEntry)
-    {
+    public boolean add(T newEntry) {
         Node<T> newNode = new Node<>(newEntry);
         newNode.next = firstNode;
         firstNode = newNode;
@@ -62,11 +58,9 @@ public class LinkedBag<T> implements BagInterface<T>
     @Override
     /** Removes one unspecified entry from this bag, if possible.
      * @return Either the removed entry, if the removal was successful, or null. **/
-    public T remove()
-    {
+    public T remove() {
         T result = null;
-        if (firstNode != null)
-        {
+        if (firstNode != null) {
             result = firstNode.getData();
             firstNode = firstNode.getNextNode();
             numberOfEntries--;
@@ -76,14 +70,11 @@ public class LinkedBag<T> implements BagInterface<T>
 
     // Locates a given entry within this bag/
     // Returns a reference to the node containing the // entry, if located or null otherwise.
-    private Node<T> getReferenceTo(T anEntry)
-    {
+    private Node<T> getReferenceTo(T anEntry) {
         boolean found = false;
         Node<T> currentNode = firstNode;
-        while (!found && (currentNode != null))
-        {
-            if (anEntry.equals(currentNode.getData()))
-            {
+        while (!found && (currentNode != null)) {
+            if (anEntry.equals(currentNode.getData())) {
                 found = true;
             } else
                 currentNode = currentNode.getNextNode();
@@ -95,12 +86,10 @@ public class LinkedBag<T> implements BagInterface<T>
     /** Removes one occurrence of a given entry from this bag, if possible.
      * @param anEntry The entry to bo removed.
      * @return True if the removal was successful, or false otherwise. **/
-    public boolean remove(T anEntry)
-    {
+    public boolean remove(T anEntry) {
         boolean result = false;
         Node<T> nodeN = getReferenceTo(anEntry);
-        if (nodeN != null)
-        {
+        if (nodeN != null) {
             nodeN.setData((firstNode.getData()));
             firstNode = firstNode.getNextNode();
             numberOfEntries--;
@@ -111,41 +100,18 @@ public class LinkedBag<T> implements BagInterface<T>
 
     @Override
     /** Removes all entries from this bag. **/
-    public void clear()
-    {
+    public void clear() {
         while (!isEmpty())
             remove();
     }
 
-    @Override
-    /** Counts the number of times a given entry appears in the bag.
-     * @param anEntry The entry to be counted.
-     * @return The number of times anEntry appears in this bag.
-     */
-    public int getFrequencyOf(T anEntry)
-    {
-        int frequency = 0;
-        int counter = 0;
-        Node<T> currentNode = firstNode;
-        while ((counter < numberOfEntries) && (currentNode != null))
-        {
-            if (anEntry.equals(currentNode.getData()))
-            {
-                frequency++;
-            }
-            counter++;
-            currentNode = currentNode.getNextNode();
-        }
-        return frequency;
-    }
 
     @Override
     /** Tests whether this bag contains a given entry.
      * @param anEntry The entry to locate.
      * @return True if the bag contains anEntry, or false otherwise
      */
-    public boolean contains(T anEntry)
-    {
+    public boolean contains(T anEntry) {
         boolean found = false;
         Node<T> currentNode = firstNode;
         while (!found && (currentNode != null))
@@ -163,8 +129,7 @@ public class LinkedBag<T> implements BagInterface<T>
     /** Retrieves all entries that are in this bag.
      * @return A newly allocated array of all the entries in this bag.
      */
-    public T[] toArray()
-    {
+    public T[] toArray() {
         @SuppressWarnings("unchecked")
         T[] result = (T[]) new Object[numberOfEntries];
         int index = 0;
@@ -178,19 +143,45 @@ public class LinkedBag<T> implements BagInterface<T>
         return result;
     }
 
+
     @Override
-    public BagInterface<T> union(BagInterface<T> bag)
-    {
+    /** Counts the number of times a given entry appears in the bag.
+     * @param anEntry The entry to be counted.
+     * @return The number of times anEntry appears in this bag.
+     */
+    public int getFrequencyOf(T anEntry) {
+        int frequency = 0;
+        int counter = 0;
+        Node<T> currentNode = firstNode;
+        while ((counter < numberOfEntries) && (currentNode != null))
+        {
+            if (anEntry.equals(currentNode.getData()))
+            {
+                frequency++;
+            }
+            counter++;
+            currentNode = currentNode.getNextNode();
+        }
+        return frequency;
+    }
+
+    @Override
+    public BagInterface<T> union(BagInterface<T> otherBag) {
         BagInterface<T> unionBag = new LinkedBag<T>(null);
 
         Node<T> currentNode = this.firstNode;
+
         int counter = 0;
 
-        while (counter < this.getCurrentSize() && currentNode != null)
-        {
+        while (counter < this.getCurrentSize() && currentNode != null) {
             unionBag.add(currentNode.data);
             currentNode = currentNode.next;
             counter++;
+            while (counter < otherBag.getCurrentSize() && currentNode != null) {
+                unionBag.add(currentNode.data);
+                currentNode = currentNode.next;
+                counter++;
+        }
         }
         return unionBag;
     }
