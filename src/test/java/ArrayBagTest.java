@@ -153,13 +153,13 @@ class ArrayBagTest {
         arrayBag.add(3);
 
         // Act
-        Integer[] toArray = arrayBag.toArray();
+        Object[] toArray = arrayBag.toArray();
 
         // Assert
         assertEquals(arrayBag.getCurrentSize(), toArray.length);
-        assertTrue(toArray[0] == 1);
-        assertTrue(toArray[1] == 2);
-        assertTrue(toArray[2] == 3);
+        assertTrue(toArray[0].equals(1));
+        assertTrue(toArray[1].equals(2));
+        assertTrue(toArray[2].equals(3));
     }
 
     /**

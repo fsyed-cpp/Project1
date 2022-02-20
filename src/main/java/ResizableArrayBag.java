@@ -70,7 +70,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      */
     @Override
     public boolean isEmpty() {
-        return this.bagObject.length == 0;
+        return this.numOfEntries == 0;
     }
 
     /**
@@ -136,7 +136,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     @Override
     public void clear()
     {
-        while(isEmpty())
+        while(!isEmpty())
         {
             remove();
         }
