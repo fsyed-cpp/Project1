@@ -13,17 +13,17 @@ class LinkedBagTest<T> {
 
     // MARK: - Setup
 
-    LinkedBag<T> linkedBag;
+    LinkedBag<Object> linkedBag;
 
     @BeforeEach
     void setup() {
 
         // Stub data
-        Node<T> thirdNode = new Node(3, null);
-        Node<T> secondNode = new Node(3, thirdNode);
-        Node<T> headNode = new Node(4, secondNode);
+        Node<Object> headNode = new Node(4, null);
 
-        linkedBag = new LinkedBag<T>(headNode);
+        linkedBag = new LinkedBag<Object>(headNode);
+        linkedBag.add(5);
+        linkedBag.add(6);
     }
 
     // MARK: - Test Cases
@@ -101,11 +101,11 @@ class LinkedBagTest<T> {
     void testGetFrequencyOf() {
 
         // Arrange
-        Node<Integer> lastNode = new Node(3, null);
-        Node<Integer> thirdNode = new Node(1, lastNode);
-        Node<Integer> secondNode = new Node(3, thirdNode);
-        Node<Integer> headNode = new Node(4, secondNode);
-        LinkedBag<Integer> intLinkedBag = new LinkedBag<Integer>(headNode);
+        Node<Object> headNode = new Node(4, null);
+        LinkedBag<Object> intLinkedBag = new LinkedBag<Object>(headNode);
+        intLinkedBag.add(3);
+        intLinkedBag.add(1);
+        intLinkedBag.add(3);
 
         // Act
         int frequencyOf3 = intLinkedBag.getFrequencyOf(3);
@@ -133,16 +133,16 @@ class LinkedBagTest<T> {
     void testToArray() {
 
         // Arrange
-        Node<Object> secondNode = new Node(3, null);
-        Node<Object> headNode = new Node(4, secondNode);
+        Node<Object> headNode = new Node(4, null);
         LinkedBag<Object> intLinkedBag = new LinkedBag<Object>(headNode);
+        intLinkedBag.add(3);
 
         // Act
         Object[] arrayBag = intLinkedBag.toArray();
 
         // Assert
-        assertEquals(arrayBag[0], 4);
-        assertEquals(arrayBag[1], 3);
+        assertEquals(arrayBag[0], 3);
+        assertEquals(arrayBag[1], 4);
     }
 
     /**
@@ -155,9 +155,9 @@ class LinkedBagTest<T> {
     void testUnion() {
 
         // Arrange
-        Node<Object> headNode = new Node(4, null);
+        Node<Object> headNode = new Node(3, null);
         LinkedBag<Object> intLinkedBag = new LinkedBag<Object>(headNode);
-        intLinkedBag.add(3);
+        intLinkedBag.add(4);
 
         Node<Object> anotherHeadNode = new Node(5, null);
         LinkedBag<Object> intLinkedBag2 = new LinkedBag<Object>(anotherHeadNode);
