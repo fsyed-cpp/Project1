@@ -166,19 +166,15 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
+    /*
+    Space Complexity = O(n).
+    Time Complexity = O(n).
+     */
     public BagInterface<T> union(BagInterface<T> otherBag) {
-        BagInterface<T> unionBag = new LinkedBag<T>(null);
-
-        Node<T> currentNode = this.firstNode;
-
-        int counter = 0;
-
-        while (counter < this.getCurrentSize() && currentNode != null) {
-            while (counter < otherBag.getCurrentSize() && currentNode != null) {
-                unionBag.add(currentNode.getData());
-                currentNode = currentNode.getNextNode();
-                counter++;
-            }
+        BagInterface<T> unionBag = this;
+        T[] otherBagArray = otherBag.toArray();
+        for (int i = 0; i < otherBagArray.length; i++) {
+            unionBag.add(otherBagArray[i]);
         }
         return unionBag;
     }
