@@ -144,7 +144,7 @@ class LinkedBagTest<T> {
         assertEquals(arrayBag[0], 3);
         assertEquals(arrayBag[1], 4);
     }
-    
+
     /**
      * A Union is defined as the joint items from both collections.
      * We have intLinkedBag with items [3, 4]
