@@ -13,7 +13,12 @@ public class LinkedBag<T> implements BagInterface<T>
 
     // MARK: - Constructor
 
+<<<<<<< HEAD
     public LinkedBag(Node<T> firstNode) {
+=======
+    public LinkedBag(Node<T> firstNode)
+    {
+>>>>>>> 2ced1439f1e69165fb130f51ede7e03dbb766708
         if (firstNode != null) {
             numberOfEntries = 1;
         } else {

@@ -70,7 +70,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      */
     @Override
     public boolean isEmpty() {
-        return this.bagObject.length == 0;
+        return this.numOfEntries == 0;
     }
 
     /**
@@ -136,7 +136,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     @Override
     public void clear()
     {
-        while(isEmpty())
+        while(!isEmpty())
         {
             remove();
         }
@@ -244,10 +244,30 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         return newBag;
     }
 
+    /**
+     * Time Complexity: O(n * m) because we are iterating inside a nested loop
+     * Space Complexity: O(n) because we are creating space for a new array from our bag
+     * @param bag The bag we want to find the difference with
+     * @return a new bag containing the difference of the items between both bags
+     */
     @Override
-    public BagInterface<T> difference(BagInterface<T> bag)
-    {
-        return null;
+    public BagInterface<T> difference(BagInterface<T> bag) {
+
+        // We must create a new bag to contain the difference of both bags
+        BagInterface<T> newBag = this;
+
+        // Convert bag to array to get element at index
+        T[] bagArray = bag.toArray();
+
+        // Iterate through the given bag, and add the common items from the
+        // current bag + passed bag into our new bag
+        for (int i = 0; i < bag.getCurrentSize(); i++) {
+            if (this.contains(bagArray[i])) {
+                newBag.remove(bagArray[i]);
+            }
+        }
+
+        return newBag;
     }
 
 
