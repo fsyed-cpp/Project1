@@ -13,12 +13,7 @@ public class LinkedBag<T> implements BagInterface<T>
 
     // MARK: - Constructor
 
-<<<<<<< HEAD
     public LinkedBag(Node<T> firstNode) {
-=======
-    public LinkedBag(Node<T> firstNode)
-    {
->>>>>>> 2ced1439f1e69165fb130f51ede7e03dbb766708
         if (firstNode != null) {
             numberOfEntries = 1;
         } else {
@@ -45,7 +40,7 @@ public class LinkedBag<T> implements BagInterface<T>
     /** Sees whether this bag is empty.
      * @return True if this bag is empty, or false if not. **/
     public boolean isEmpty() {
-        return numberOfEntries == 0;
+        return this.numberOfEntries == 0;
     }
 
     @Override
@@ -179,12 +174,9 @@ public class LinkedBag<T> implements BagInterface<T>
         int counter = 0;
 
         while (counter < this.getCurrentSize() && currentNode != null) {
-            unionBag.add(currentNode.data);
-            currentNode = currentNode.next;
-            counter++;
             while (counter < otherBag.getCurrentSize() && currentNode != null) {
-                unionBag.add(currentNode.data);
-                currentNode = currentNode.next;
+                unionBag.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
                 counter++;
             }
         }
