@@ -70,7 +70,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      */
     @Override
     public boolean isEmpty() {
-        return this.bagObject.length == 0;
+        return this.numOfEntries == 0;
     }
 
     /**
@@ -136,7 +136,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     @Override
     public void clear()
     {
-        while(isEmpty())
+        while(!isEmpty())
         {
             remove();
         }
@@ -192,11 +192,29 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         return result;
     }
 
+    /**
+     * This method does not alter either bag. The current bag and the second bag in the parameter
+     * should be the same when the method ends.
+     * @param secondBag
+     * @return unionBag containing elements from 2 bags
+     */
     @Override
-    public BagInterface<T> union(BagInterface<T> bag)
+    public BagInterface<T> union(BagInterface<T> secondBag)
     {
+        BagInterface <T> unionBag = new ResizableArrayBag<>();
+        ResizableArrayBag <T> otherBag = (ResizableArrayBag<T>) secondBag;
 
-        return null;
+        int index;
+
+        // add entries from this current object (bagObject) to the other bag
+        for (index = 0; index < numOfEntries; index++)
+            unionBag.add(bagObject[index]);
+
+        // add entries from the second bag to the new bag
+        for (index = 0; index < otherBag.getCurrentSize(); index++)
+            unionBag.add(otherBag.bagObject[index]);
+
+        return unionBag;
     }
 
     /**
@@ -206,7 +224,8 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      * @return a new bag containing the common items between both bags
      */
     @Override
-    public BagInterface<T> intersection(BagInterface<T> bag) {
+    public BagInterface<T> intersection(BagInterface<T> bag)
+    {
 
         // We must create a new bag to contain the intersection of both bags
         BagInterface<T> newBag = new ResizableArrayBag<T>(this.getCurrentSize());
@@ -225,9 +244,30 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         return newBag;
     }
 
+    /**
+     * Time Complexity: O(n * m) because we are iterating inside a nested loop
+     * Space Complexity: O(n) because we are creating space for a new array from our bag
+     * @param bag The bag we want to find the difference with
+     * @return a new bag containing the difference of the items between both bags
+     */
     @Override
     public BagInterface<T> difference(BagInterface<T> bag) {
-        return null;
+
+        // We must create a new bag to contain the difference of both bags
+        BagInterface<T> newBag = this;
+
+        // Convert bag to array to get element at index
+        T[] bagArray = bag.toArray();
+
+        // Iterate through the given bag, and add the common items from the
+        // current bag + passed bag into our new bag
+        for (int i = 0; i < bag.getCurrentSize(); i++) {
+            if (this.contains(bagArray[i])) {
+                newBag.remove(bagArray[i]);
+            }
+        }
+
+        return newBag;
     }
 
 
@@ -311,7 +351,4 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                     ("Requested capacity exceeds maximum of " + MAX_CAPACITY + ".");
         }
     }
-
-
-
 }

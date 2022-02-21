@@ -214,17 +214,17 @@ class LinkedBagTest<T> {
     void testDifference() {
 
         // Arrange
-        Node<Integer> thirdNode = new Node(5, null);
-        Node<Integer> secondNode = new Node(3, thirdNode);
-        Node<Integer> headNode = new Node(4, secondNode);
-        LinkedBag<Integer> intLinkedBag = new LinkedBag<Integer>(headNode);
+        Node<Object> headNode = new Node(4, null);
+        LinkedBag<Object> intLinkedBag = new LinkedBag<Object>(headNode);
+        intLinkedBag.add(3);
+        intLinkedBag.add(5);
 
-        Node<Integer> aRandomNode = new Node(3, null);
-        Node<Integer> anotherHeadNode = new Node(5, aRandomNode);
-        LinkedBag<Integer> intLinkedBag2 = new LinkedBag<Integer>(anotherHeadNode);
+        Node<Object> anotherHeadNode = new Node(5, null);
+        LinkedBag<Object> intLinkedBag2 = new LinkedBag<Object>(anotherHeadNode);
+        intLinkedBag2.add(3);
 
         // Act
-        BagInterface<Integer> leftover = intLinkedBag.difference(intLinkedBag2);
+        BagInterface<Object> leftover = intLinkedBag.difference(intLinkedBag2);
 
         // Assert
         assertTrue(leftover.contains(4));
