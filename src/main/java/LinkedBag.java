@@ -26,23 +26,25 @@ public class LinkedBag<T> implements BagInterface<T>
      */
 
     @Override
+    /** Gets the current number of entries in this bag.
+     @return  The integer number of entries currently in the bag. */
     public int getCurrentSize()
     {
         return numberOfEntries;
     }
 
     @Override
-    /* Sees whether this bag is empty.
-     * @return True if this bag is empty, or false if not. */
+    /** Sees whether this bag is empty.
+     @return  True if the bag is empty, or false if not. */
     public boolean isEmpty()
     {
         return numberOfEntries == 0;
     }
 
     @Override
-    /* Adds a new entry to this bag.
-     * @param newEntry the object to be added as a new entry
-     * @return True if the addition is successful, or false if not. */
+    /** Adds a new entry to this bag.
+     @param newEntry  The object to be added as a new entry.
+     @return  True if the addition is successful, or false if not. */
     public boolean add(T newEntry)
     {
         Node<T> newNode = new Node<>(newEntry);
@@ -53,6 +55,8 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
+    /** Removes one unspecified entry from this bag, if possible.
+     @return  Either the removed entry, if the removal was successful, or null. */
     public T remove()
     {
         T result = null;
@@ -81,6 +85,9 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
+    /** Removes one occurrence of a given entry from this bag, if possible.
+     @param anEntry  The entry to be removed.
+     @return  True if the removal was successful, or false if not. */
     public boolean remove(T anEntry)
     {
         boolean result = false;
@@ -96,6 +103,7 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
+    /** Removes all entries from this bag. */
     public void clear()
     {
         while (!isEmpty())
@@ -103,6 +111,9 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
+    /** Counts the number of times a given entry appears in this bag.
+     @param anEntry  The entry to be counted.
+     @return  The number of times anEntry appears in the bag. */
     public int getFrequencyOf(T anEntry)
     {
         int frequency = 0;
@@ -121,6 +132,9 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
+    /** Tests whether this bag contains a given entry.
+     @param anEntry  The entry to find.
+     @return  True if the bag contains anEntry, or false if not. */
     public boolean contains(T anEntry)
     {
         boolean found = false;
@@ -137,6 +151,8 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
+    /** Retrieves all entries that are in this bag.
+     @return  A newly allocated array of all the entries in the bag. Note: If the bag is empty, the returned array is empty. */
     public T[] toArray()
     {
         @SuppressWarnings("unchecked")
@@ -155,27 +171,28 @@ public class LinkedBag<T> implements BagInterface<T>
     @Override
     public BagInterface<T> union(BagInterface<T> otherBag)
     {
-        /*T[] firstBagContents = this.toArray();
+        BagInterface<T> unionBag = new LinkedBag<>(null);
+        T[] firstBagContents = this.toArray();
         T[] secondBagContents = otherBag.toArray();
-        BagInterface<T> unionBag = new LinkedBag<>(firstNode);
-        for (int i = 0; i < firstBagContents.length; i++) {
+        /*for (int i = 0; i < firstBagContents.length; i++) {
             unionBag.add(firstBagContents[i]);
         }
         for (int i = 0; i < secondBagContents.length; i++) {
             unionBag.add(secondBagContents[i]);
+        }*/
+        Node<T> firstStart = this.firstNode;
+        Node<T> secondStart = this.firstNode;
+        int counter = 0;
+        while (firstStart != null && counter < this.getCurrentSize()) {
+            unionBag.add(firstStart.data);
         }
-        return unionBag;*/
-        BagInterface<T> bag1 = new LinkedBag<T>(null);
-        T[] bag2 = otherBag.toArray();
-        for (T elem : bag2)
-        {
-            bag1.add(elem);
+        while (secondStart != null && counter < this.getCurrentSize()) {
+            unionBag.add(secondStart.data);
         }
-        T[] first = this.toArray();
-        for (T elem: first){
-            bag1.add(elem);
-        }
-        return bag1;
+        firstStart = firstStart.next;
+        secondStart = secondStart.next;
+        counter++;
+        return unionBag;
     }
 
     /**
