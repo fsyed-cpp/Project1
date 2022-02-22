@@ -253,6 +253,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     @Override
     public BagInterface<T> difference(BagInterface<T> bag) {
 
+
         // We must create a new bag to contain the difference of both bags
         BagInterface<T> newBag = this;
 
@@ -266,7 +267,6 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                 newBag.remove(bagArray[i]);
             }
         }
-
         return newBag;
     }
 
@@ -351,4 +351,18 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                     ("Requested capacity exceeds maximum of " + MAX_CAPACITY + ".");
         }
     }
+
+    /**
+     * throw an exception when the entry is NULL
+     * This method need to be called in the difference, union, intersection
+     * @param anEntry
+     */
+    private void checkForNullEntries (T anEntry)
+    {
+        if (anEntry == null)
+        {
+            throw new NullPointerException("Can not be NULL entry");
+        }
+    }
+
 }
