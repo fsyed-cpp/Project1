@@ -1,13 +1,12 @@
 /**
  * The Linked List representation of our bag that implements the Bag interface
- *
+ * Holds a reference to a 'Node' object
  * @param <T>
  */
-
-public class LinkedBag<T> implements BagInterface<T>
-{
+public class LinkedBag<T> implements BagInterface<T> {
 
     // MARK: - Properties
+
     private Node<T> firstNode;
     private int numberOfEntries;
 
@@ -23,10 +22,6 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     // MARK: - Bag Interface methods
-
-    /**
-     * TODO -> Implement the logic for all the Linked Bag methods
-     */
 
     @Override
     /** Gets the number of entries currently in this bag.
@@ -105,7 +100,6 @@ public class LinkedBag<T> implements BagInterface<T>
             remove();
     }
 
-
     @Override
     /** Tests whether this bag contains a given entry.
      * @param anEntry The entry to locate.
@@ -114,13 +108,12 @@ public class LinkedBag<T> implements BagInterface<T>
     public boolean contains(T anEntry) {
         boolean found = false;
         Node<T> currentNode = firstNode;
-        while (!found && (currentNode != null))
-        {
-            if (anEntry.equals(currentNode.getData()))
-            {
+        while (!found && (currentNode != null)) {
+            if (anEntry.equals(currentNode.getData())) {
                 found = true;
-            } else
+            } else {
                 currentNode = currentNode.getNextNode();
+            }
         }
         return found;
     }
@@ -134,8 +127,7 @@ public class LinkedBag<T> implements BagInterface<T>
         T[] result = (T[]) new Object[numberOfEntries];
         int index = 0;
         Node<T> currentNode = firstNode;
-        while ((index < numberOfEntries) && (currentNode != null))
-        {
+        while ((index < numberOfEntries) && (currentNode != null)) {
             result[index] = currentNode.getData();
             index++;
             currentNode = currentNode.getNextNode();
@@ -153,10 +145,8 @@ public class LinkedBag<T> implements BagInterface<T>
         int frequency = 0;
         int counter = 0;
         Node<T> currentNode = firstNode;
-        while ((counter < numberOfEntries) && (currentNode != null))
-        {
-            if (anEntry.equals(currentNode.getData()))
-            {
+        while ((counter < numberOfEntries) && (currentNode != null)) {
+            if (anEntry.equals(currentNode.getData())) {
                 frequency++;
             }
             counter++;
@@ -166,9 +156,11 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    /*
-    Space Complexity = O(n).
-    Time Complexity = O(n).
+    /**
+     * Time Complexity: O(n) because we are iterating through our second bag inside our first bag traversal
+     * Space Complexity O(n) because we are creating a new bag with the collection of both items
+     * @param bag The bag contains elements from both bags
+     * @return a new bag object containing all the items from both bags
      */
     public BagInterface<T> union(BagInterface<T> otherBag) {
 
@@ -239,7 +231,6 @@ public class LinkedBag<T> implements BagInterface<T>
             current = current.next;
             counter++;
         }
-
         return newBag;
     }
 }
