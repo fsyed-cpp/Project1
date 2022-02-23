@@ -199,8 +199,12 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      * @return unionBag containing elements from 2 bags
      */
     @Override
-    public BagInterface<T> union(BagInterface<T> secondBag)
+    public BagInterface<T> union(BagInterface<T> secondBag) throws NullPointerException
     {
+        if (secondBag == null) {
+            throw new NullPointerException("second bag is null");
+        }
+
         BagInterface <T> unionBag = new ResizableArrayBag<>();
         ResizableArrayBag <T> otherBag = (ResizableArrayBag<T>) secondBag;
 
@@ -224,8 +228,11 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      * @return a new bag containing the common items between both bags
      */
     @Override
-    public BagInterface<T> intersection(BagInterface<T> bag)
+    public BagInterface<T> intersection(BagInterface<T> bag) throws NullPointerException
     {
+        if (bag == null) {
+            throw new NullPointerException("second bag is null");
+        }
 
         // We must create a new bag to contain the intersection of both bags
         BagInterface<T> newBag = new ResizableArrayBag<T>(this.getCurrentSize());
@@ -251,10 +258,19 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      * @return a new bag containing the difference of the items between both bags
      */
     @Override
-    public BagInterface<T> difference(BagInterface<T> bag) {
+    public BagInterface<T> difference(BagInterface<T> bag) throws NullPointerException {
+
+        if (bag == null) {
+            throw new NullPointerException("second bag is null");
+        }
 
         // We must create a new bag to contain the difference of both bags
-        BagInterface<T> newBag = this;
+        // Clone the current bag into the new bag
+        BagInterface<T> newBag = new ResizableArrayBag<T>(this.getCurrentSize());
+        T[] currentBagArray = this.toArray();
+        for (int i = 0; i < this.getCurrentSize(); i++) {
+            newBag.add(currentBagArray[i]);
+        }
 
         // Convert bag to array to get element at index
         T[] bagArray = bag.toArray();
@@ -266,7 +282,6 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                 newBag.remove(bagArray[i]);
             }
         }
-
         return newBag;
     }
 

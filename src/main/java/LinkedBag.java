@@ -171,6 +171,11 @@ public class LinkedBag<T> implements BagInterface<T>
     Time Complexity = O(n).
      */
     public BagInterface<T> union(BagInterface<T> otherBag) {
+
+        if (otherBag == null) {
+            throw new NullPointerException("other bag is null");
+        }
+
         BagInterface<T> unionBag = this;
         T[] otherBagArray = otherBag.toArray();
         for (int i = 0; i < otherBagArray.length; i++) {
@@ -186,7 +191,11 @@ public class LinkedBag<T> implements BagInterface<T>
      * @return a new bag object containing the common items from both bags
      */
     @Override
-    public BagInterface<T> intersection(BagInterface<T> bag) {
+    public BagInterface<T> intersection(BagInterface<T> bag) throws NullPointerException {
+
+        if (bag == null) {
+            throw new NullPointerException("other bag is null");
+        }
 
         // Create a new bag to return with the common items
         BagInterface<T> newBag = new LinkedBag<T>(null);
@@ -209,6 +218,10 @@ public class LinkedBag<T> implements BagInterface<T>
 
     @Override
     public BagInterface<T> difference(BagInterface<T> bag) {
+
+        if (bag == null) {
+            throw new NullPointerException("other bag is null");
+        }
 
         // Create a new bag to return with the common items
         BagInterface<T> newBag = this;
