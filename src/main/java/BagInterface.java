@@ -1,3 +1,5 @@
+import java.nio.file.NotLinkException;
+
 /** An interface that describes the operations of a bag of objects. */
 public interface BagInterface<T>
 {
@@ -44,14 +46,14 @@ public interface BagInterface<T>
 
     /** Combines the contents of the passed in Bag with the caller Bag into a newly created Bag.
      @return  A newly allocated bag containing the combined contents from both bags */
-    public BagInterface<T> union(BagInterface<T> bag);
+    public BagInterface<T> union(BagInterface<T> bag) throws NullPointerException;
 
     /** Contains the overlapping entities from both bags.
      @return  A newly allocated bag containing the overlapping entities from the caller bag and passed in bag. */
-    public BagInterface<T> intersection(BagInterface<T> bag);
+    public BagInterface<T> intersection(BagInterface<T> bag) throws NullPointerException;
 
     /** New collection of entities after removing entities that occur in both bags.
      @return  A newly allocated bag containing the difference of both bags. */
-    public BagInterface<T> difference(BagInterface<T> bag);
+    public BagInterface<T> difference(BagInterface<T> bag) throws NullPointerException;
 
 } // end BagInterface
