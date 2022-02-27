@@ -40,6 +40,31 @@ public class BagDriver {
         } catch (NullPointerException exception) {
             System.out.println("We caught an exception attempting to union our array bag with a null bag " + exception);
         }
+
+        // Same bags but using LinkedBag
+        BagInterface<Integer> intLinkedBag = new LinkedBag<>(null);
+        intLinkedBag.add(1);
+        intLinkedBag.add(2);
+        intLinkedBag.add(3);
+        BagInterface<Integer> intLinkedBag2 = new LinkedBag<>(null);
+        intLinkedBag2.add(2);
+        intLinkedBag2.add(3);
+        intLinkedBag2.add(5);
+        intLinkedBag2.add(6);
+
+        // Display Union, Intersection, and Difference
+        BagInterface<Integer> union2 = intLinkedBag.union(intLinkedBag2);
+        BagInterface<Integer> difference2 = intLinkedBag.difference(intLinkedBag2);
+        BagInterface<Integer> intersection2 = intLinkedBag.intersection(intLinkedBag2);
+
+        System.out.println("Union of Linked Bag:");
+        printBagDetails(union2);
+
+        System.out.println("Difference of Linked Bag:");
+        printBagDetails(difference2);
+
+        System.out.println("Intersection of Linked Bag:");
+        printBagDetails(intersection2);
     }
 
     private static void printBagDetails(BagInterface bag) {

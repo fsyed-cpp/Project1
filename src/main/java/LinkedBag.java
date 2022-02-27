@@ -168,7 +168,7 @@ public class LinkedBag<T> implements BagInterface<T> {
             throw new NullPointerException("other bag is null");
         }
 
-        BagInterface<T> unionBag = this;
+        BagInterface<T> unionBag = cloneBag(this);
         T[] otherBagArray = otherBag.toArray();
         for (int i = 0; i < otherBagArray.length; i++) {
             unionBag.add(otherBagArray[i]);
@@ -216,7 +216,7 @@ public class LinkedBag<T> implements BagInterface<T> {
         }
 
         // Create a new bag to return with the common items
-        BagInterface<T> newBag = this;
+        BagInterface<T> newBag = cloneBag(this);
 
         // Get the starting position for our current bag and use a counter to keep track + safeguard
         Node<T> current = this.firstNode;
@@ -231,6 +231,14 @@ public class LinkedBag<T> implements BagInterface<T> {
             current = current.next;
             counter++;
         }
+        return newBag;
+    }
+
+    // MARK: - Helpers
+
+    LinkedBag<T> cloneBag(LinkedBag<T> bag) {
+        LinkedBag<T> newBag = new LinkedBag<T>(bag.firstNode);
+        newBag.numberOfEntries = bag.numberOfEntries;
         return newBag;
     }
 }
